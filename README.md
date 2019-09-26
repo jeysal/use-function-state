@@ -21,3 +21,5 @@ const Comp = () => {
   );
 };
 ```
+
+See [example.test.tsx](test/example.test.tsx) for a more realistic usage example.
