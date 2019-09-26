@@ -1,4 +1,8 @@
-import { Dispatch } from 'react';
+import { Dispatch, useReducer } from 'react';
+
+function reducer<F extends Function | undefined>(_state: F, newFn: F) {
+  return newFn;
+}
 
 export default function useFunctionState<F extends Function>(
   initialFn: F,
@@ -10,5 +14,5 @@ export default function useFunctionState<F extends Function>(): [
 export default function useFunctionState<F extends Function>(
   initialFn?: F,
 ): [F | undefined, Dispatch<F | undefined>] {
-  return [initialFn, () => {}];
+  return useReducer(reducer, initialFn);
 }
