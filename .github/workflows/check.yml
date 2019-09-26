@@ -1,0 +1,29 @@
+name: check
+
+on: [push]
+
+jobs:
+  check:
+    name: Run checks on Node ${{ matrix.node_version }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node_version: [8, 10, 12]
+
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v1
+
+    - name: Set up Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node_version }}
+
+    - name: Yarn install
+      run: yarn --frozen-lockfile
+
+    - name: Lint
+      run: yarn lint src test || true # ignore errors because of https://github.com/jaredpalmer/tsdx/issues/210
+
+    - name: Test
+      run: yarn test
